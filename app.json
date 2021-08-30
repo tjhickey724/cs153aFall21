@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "HelloTim",
+    "slug": "HelloTim",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "HelloTim"
+}
