@@ -33,7 +33,11 @@ const MyStack = () => {
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <View style={{}}>
+      <View style={{ flexDirection: 'row',
+                     margin:"25px",
+                     border:"thick solid black",
+                     padding:'10px',
+                     justifyContent: 'space-around', }}>
 
         <Button
           title="Go to Jane's profile"
