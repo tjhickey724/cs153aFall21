@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "HelloTim",
-    "slug": "HelloTim",
+    "name": "CS153aFall21",
+    "slug": "CS153aFall21",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ]
   },
-  "name": "HelloTim"
+  "name": "CS153aFall21"
 }
