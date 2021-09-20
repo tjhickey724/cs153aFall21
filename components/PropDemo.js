@@ -13,7 +13,7 @@ const MealCost = ({restName,mealCost,taxRate,tipRate}) => {
         <Text>The price of your meal was {mealCost}</Text>
         <Text>The tax rate is {taxRate}</Text>
         <Text>The tip rate is {tipRate}</Text>
-        <Text>The total cost of your meal is
+        <Text>The total cost of your meal is $
             {mealCost*(1+taxRate/100)*(1+tipRate/100)}</Text>
 
       </View>

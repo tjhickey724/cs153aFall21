@@ -5,8 +5,9 @@ import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 // const mph2fps = (mph) => mph*5280/3600
 
 const TipCalculator = (props) => {
-  const [meal, setMeal] = useState(0);
+  const [meal, setMeal] = useState("0");
   const [tip, setTip] = useState(0);
+  const [tipRate,setTipRate] = useState(props.tipRate)
 
 
       return (
@@ -16,13 +17,18 @@ const TipCalculator = (props) => {
     </Text>
     <TextInput
           style={styles.textinput}
+          placeholder="tipRate"
+          onChangeText={text => {setTipRate(parseFloat(text))}}
+      />
+    <TextInput
+          style={styles.textinput}
           placeholder="cost of meal"
-          onChangeText={text => {setMeal(parseFloat(text))}}
+          onChangeText={text => {setMeal(text)}}
       />
     <Button
           color='red' title='Calculate Tip'
           onPress = {() =>
-               setTip(meal*props.tipRate)          }
+               setTip(parseFloat(meal)*tipRate)          }
       />
 
     <Text> The tip is {tip} </Text>
