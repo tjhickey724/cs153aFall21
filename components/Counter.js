@@ -5,6 +5,9 @@ import { Button, StyleSheet, Text,  View } from "react-native";
 // const mph2fps = (mph) => mph*5280/3600
 
 const Counter = ({start, name}) => {
+// const Counter = (props) => {
+//   const start = props.start
+//   const name = props.name
   const [count, setCount] = useState(start);
 
 
@@ -33,12 +36,14 @@ const Counter = ({start, name}) => {
     }
   const styles = StyleSheet.create ({
     container: {
-      flex: 1,
+      //flex: 1,
       flexDirection:'column',
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
       border:'thick solid blue',
+      margin:"20px",
+      padding:"20px",
     },
     textinput:{
       margin:20,

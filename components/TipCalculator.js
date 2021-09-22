@@ -8,7 +8,18 @@ const TipCalculator = (props) => {
   const [meal, setMeal] = useState("0");
   const [tip, setTip] = useState(0);
   const [tipRate,setTipRate] = useState(props.tipRate)
+  const [debugging,setDebugging] = useState(false)
 
+  let debugView = ""
+  if (debugging) {
+    debugView =
+      <View>
+          <Text> meal: {meal} </Text>
+          <Text> tip: {tip} </Text>
+          <Text> tipRate: {tipRate} </Text>
+          <Text> debugging: {debugging} </Text>
+      </View>
+  }
 
       return (
   <View style={styles.container}>
@@ -32,6 +43,13 @@ const TipCalculator = (props) => {
       />
 
     <Text> The tip is {tip} </Text>
+
+    <Button
+        title={(debugging?'hide':'show')+" debug info" }
+        color="green"
+        onPress = {() => setDebugging(!debugging)}
+        />
+        {debugView}
   </View>
       );
     }
@@ -42,6 +60,9 @@ const TipCalculator = (props) => {
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+      border: "thick solid red",
+      margin:"20px",
+      padding:"20px",
     },
     textinput:{
       margin:20,
