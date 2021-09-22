@@ -9,6 +9,7 @@ import TipCalculator from './components/TipCalculator.js'
 import Counter from './components/Counter.js'
 import ListDemoScreen from './components/ListDemoScreen'
 import CovidDemo from './components/CovidDemo'
+import PhotoId from './components/PhotoId'
 
 // const App = () => {...}
 export default function App() {
