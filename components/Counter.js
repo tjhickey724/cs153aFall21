@@ -41,7 +41,7 @@ const Counter = ({start, name}) => {
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
-      border:'thick solid blue',
+
       margin:"20px",
       padding:"20px",
     },

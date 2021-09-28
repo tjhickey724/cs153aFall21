@@ -1,4 +1,5 @@
 import React from 'react';
+/*
 import {View} from 'react-native';
 import NavDemo1 from './components/NavDemo1'
 import Quiz1 from './components/Quiz1.js'
@@ -8,12 +9,21 @@ import PropDemo from './components/PropDemo.js'
 import TipCalculator from './components/TipCalculator.js'
 import Counter from './components/Counter.js'
 import ListDemoScreen from './components/ListDemoScreen'
-import CovidDemo from './components/CovidDemo'
+//import CovidDemo from './components/CovidDemo'
 import PhotoId from './components/PhotoId'
+import ShowPage from './components/ShowPage'
 
-// const App = () => {...}
+import ShowPage from './components/ShowPage'
+import Counter from './components/Counter.js'
+import WebViewer from './components/WebViewer'
+*/
+import Pomodoros from './components/Pomodoros'
+
+
+
 export default function App() {
   return (
-    <CovidDemo />
+    <Pomodoros />
+    //<WebViewer url="https://raw.githubusercontent.com/tjhickey724/cs153aFall21/main/index.js"/>
   );
 }
