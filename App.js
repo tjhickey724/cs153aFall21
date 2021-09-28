@@ -18,12 +18,12 @@ import Counter from './components/Counter.js'
 import WebViewer from './components/WebViewer'
 */
 import Pomodoros from './components/Pomodoros'
-
+import WebViewer from './components/WebViewer'
 
 
 export default function App() {
   return (
-    <Pomodoros />
-    //<WebViewer url="https://raw.githubusercontent.com/tjhickey724/cs153aFall21/main/index.js"/>
+    //<Pomodoros />
+    <WebViewer/>
   );
 }

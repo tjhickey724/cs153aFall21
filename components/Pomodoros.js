@@ -1,15 +1,17 @@
 import React, { useState, useEffect }  from 'react';
-import { SafeAreaView, ScrollView, View, Button,
-         FlatList, StyleSheet, Text, TextInput, StatusBar } from 'react-native';
+import { View, Button,
+         FlatList, StyleSheet,
+         Text, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const Pomodoros = (props) => {
+const Pomodoros = () => {
   const [dateTime,setDateTime] = useState("")
   const [goal,setGoal] = useState("")
   const [result,setResult] = useState("")
   const [pomodoros,setPomodoros]= useState([])
 
+  // this loads in the data after the app has been rendered
   useEffect(() => {getData()}
            ,[])
 
@@ -24,15 +26,17 @@ const Pomodoros = (props) => {
             console.log('just set Info, Name and Email')
           } else {
             console.log('just read a null value from Storage')
+            // this happens the first time the app is loaded
+            // as there is nothing in storage...
             setPomodoros([])
             setDateTime("")
             setGoal("")
             setResult("")
           }
-
-
         } catch(e) {
           console.log("error in getData ")
+          // this shouldn't happen, but its good practice
+          // to check for errors!
           console.dir(e)
           // error reading value
         }
@@ -62,17 +66,18 @@ const Pomodoros = (props) => {
   }
 
 
+// Each Pomorodo in the FlatList will be rendered as follows:
   const renderPomodoro = ({item}) => {
     return (
       <View style={styles.pomodoro}>
-           <Text>When: {item.dateTime} by </Text>
-           <Text>Goal: {item.goal} </Text>
-           <Text>Result: {item.result} </Text>
-
+           <Text>{item.dateTime}</Text>
+           <Text>{item.goal} </Text>
+           <Text>{item.result} </Text>
       </View>
     )
   }
 
+// We can set debug to true if we want to see all of the state variables
   let debug=false
   const debugView =
     (<View>
@@ -93,16 +98,19 @@ const Pomodoros = (props) => {
       </Text>
   </View>);
 
+  // here is where we render the app
   return (
+
     <View style={styles.container}>
-      <Text style={styles.headerText}> Quiz 3: Pomodoros! </Text>
-      <Text>
-         Create this app as a single component classed Pomodoro with no props. A pomodoro contains a date, a goal, and a result which the user enters into the TextInputs below. When they press the button the pomodoro gets added to the list of pomorodos which is stored in AsyncStorage and displayed below. The pomodoros are displayed with flex-direction 'row' and justifyContent 'space-between'
+      <Text style={styles.headerText}>Pomodoros</Text>
+      <Text style={{fontSize:12}}>
+          Enter the info for your current pomodoro below
       </Text>
+
       <View style={{flexDirection:'row',
-                    margin:'20px',
+                    margin:20,
                     justifyContent:'space-around'}}>
-            <TextInput
+            <TextInput // for the date/time
               style={{fontSize:10}}
               placeholder="Date/Time"
               onChangeText={text => {
@@ -111,7 +119,7 @@ const Pomodoros = (props) => {
               value = {dateTime}
             />
 
-            <TextInput
+            <TextInput // for the goal
               style={{fontSize:12}}
               placeholder="Goal"
               onChangeText={text => {
@@ -120,7 +128,7 @@ const Pomodoros = (props) => {
               value = {goal}
             />
 
-            <TextInput
+            <TextInput // for the result
               style={{fontSize:12}}
               placeholder="Result"
               onChangeText={text => {
@@ -159,14 +167,25 @@ const Pomodoros = (props) => {
                 />
 
       </View>
+      <View style={{flexDirection:'row',
+                    justifyContent:'center',
+                    backgroundColor:'lightgray'}}>
+        <Text style={{fontSize:20,
+                      color:'green',backgroundColor:'lightgray'}}>
+              History of Pomodoros
+         </Text>
+      </View>
 
       <FlatList
-        data={pomodoros}
+        data={pomodoros.reverse()}
         renderItem={renderPomodoro}
         keyExtractor={item => item.dateTime}
       />
+
       {debug?debugView: <Text></Text>}
+      
     </View>
+
   );
 }
 

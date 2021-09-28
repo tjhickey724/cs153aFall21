@@ -2,18 +2,19 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, Text, View,  } from "react-native";
 
-const ShowPage = (props) => {
-  const url = props.url
+const ShowPage = ({url}) => {
   const [text, setText] = useState('nothing yet');
   console.log(url)
 
-
+  // we use fetch to load in the text from the url
   useEffect(() => {
     fetch(url)
       .then((response) => response.text())
       .then((response) => {setText(response)})
-      .catch((error) => {console.error(error)})
-  });
+      .catch((error) => {
+          setText('error: '+JSON.stringify(error) )
+      });
+    })
 
   return (
    <ScrollView>
