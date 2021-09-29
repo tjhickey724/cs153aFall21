@@ -24,8 +24,8 @@ import WebViewer from './components/WebViewer'
 
 export default function App() {
   return (
-    //<Pomodoros />
-    <WebViewer/>
+    <Pomodoros />
+    //<WebViewer/>
     //<Profile />
   );
 }

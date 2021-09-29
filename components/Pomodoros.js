@@ -15,6 +15,31 @@ const Pomodoros = () => {
   useEffect(() => {getData()}
            ,[])
 
+  const getDataUGLY = () => {
+
+          // the '@profile_info' can be any string
+          AsyncStorage.getItem('@pomodoros')
+            .then((jsonValue) => {
+              let data = null
+              if (jsonValue!=null) {
+                data = JSON.parse(jsonValue)
+                setPomodoros(data)
+                console.log('just set Info, Name and Email')
+              } else {
+                console.log('just read a null value from Storage')
+                // this happens the first time the app is loaded
+                // as there is nothing in storage...
+                setPomodoros([])
+                setDateTime("")
+                setGoal("")
+                setResult("")
+              }
+            })
+           .catch((error)=> {   console.log("error in getData ")})
+
+
+  }
+
   const getData = async () => {
         try {
           // the '@profile_info' can be any string
@@ -54,6 +79,18 @@ const Pomodoros = () => {
         }
   }
 
+  const clearAllUGLY = () => {
+        try {
+          console.log('in clearData')
+          AsyncStorage.clear()
+             .then(() => {console.log('cleared the data')})
+        } catch(e) {
+          console.log("error in clearData ")
+          console.dir(e)
+          // clear error
+        }
+  }
+
   const clearAll = async () => {
         try {
           console.log('in clearData')
@@ -78,7 +115,7 @@ const Pomodoros = () => {
   }
 
 // We can set debug to true if we want to see all of the state variables
-  let debug=false
+  let debug=true
   const debugView =
     (<View>
       <Text style={styles.headerText}>
@@ -183,7 +220,7 @@ const Pomodoros = () => {
       />
 
       {debug?debugView: <Text></Text>}
-      
+
     </View>
 
   );
