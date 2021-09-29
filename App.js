@@ -17,6 +17,7 @@ import ShowPage from './components/ShowPage'
 import Counter from './components/Counter.js'
 import WebViewer from './components/WebViewer'
 */
+import Profile from './components/Profile'
 import Pomodoros from './components/Pomodoros'
 import WebViewer from './components/WebViewer'
 
@@ -25,5 +26,6 @@ export default function App() {
   return (
     //<Pomodoros />
     <WebViewer/>
+    //<Profile />
   );
 }
