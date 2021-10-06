@@ -41,7 +41,8 @@ export default function App() {
           </TouchableOpacity>
         </View>
       </Camera>
-      <Text style={{fontSize:30}}>End of Camera Demo</Text>
+
+      <Text style={{flex:1,fontSize:30}}>End of Camera Demo</Text>
     </View>
 
   );
