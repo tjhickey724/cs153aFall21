@@ -22,14 +22,16 @@ import Pomodoros from './components/Pomodoros'
 import WebViewer from './components/WebViewer'
 import CounterDemo from './components/CounterDemo'
 import ContextDemo from './components/ContextDemo'
+import NavDemo from './components/NavContextDemo'
 */
 
 
-import NavDemo from './components/NavContextDemo'
+//import NavDemo from './components/NavContextDemo'
+import MathQuiz from './components/MathQuiz'
 
 export default function App() {
   return (
-    <NavDemo />
+    <MathQuiz n={12}/>
 
   );
 }

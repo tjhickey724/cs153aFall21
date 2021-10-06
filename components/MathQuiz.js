@@ -1,0 +1,129 @@
+/*
+  MathQuiz.js - this component will generate arithmetic questions
+  and ask the user to solve them. It keeps track of the number they
+  got right and the total number of questions they answered.
+  It generates random numbers in the range 0 to n for products
+*/
+import React, { useState } from "react";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+
+
+
+const MathQuiz = ({n}) => {
+  const [x, setX] = useState(Math.round(Math.random()*n));
+  const [y, setY] = useState(Math.round(Math.random()*n));
+  const [correct, setCorrect] = useState(0);
+  const [answer,setAnswer] = useState('')
+  const [result,setResult] = useState('waiting')
+  const [answered,setAnswered] = useState(0)
+  const [debugging,setDebugging] = useState(false)
+
+  let debugView = ""
+  if (debugging) {
+    debugView =
+      <View>
+          <Text> x: {x} </Text>
+          <Text> y: {y} </Text>
+          <Text>answer: {answer} </Text>
+          <Text> correct: {correct} </Text>
+          <Text> answered: {answered} </Text>
+          <Text> result: {result} </Text>
+      </View>
+  }
+
+      return (
+  <View style={{flex:1,justifyContent:'flex-start',alignItems:'flex-start'}}>
+    <Text style={{fontSize:60, color:'blue'}}>
+       Math Quiz for numbers between 0 and {n}
+    </Text>
+    <Text style={{fontSize:40}}>
+      Calculate the product of the following two numbers:
+    </Text>
+    <View style={{flexDirection:'row', justifyContent:'space-around'}}>
+      <Text style={{fontSize:60}}> {x} * {y} = </Text>
+      <TextInput
+            style={{fontSize:60}}
+            placeholder='???'
+            onChangeText={text => {setAnswer(text)}}
+            value={answer}
+        />
+    </View>
+    {result=='waiting'?(
+    <Button
+        color="red"
+        title="check answer"
+        onPress={()=> {
+          let a = parseInt(answer)
+          if (a == x*y){
+            setResult('correct')
+            setCorrect(correct+1)
+          } else {
+            setResult('incorrect')
+          }
+
+          setAnswered(answered+1)
+        }}
+    />
+  ):(<View style={
+       {
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'space-around'}}>
+        <Text style={{fontSize:32,color:'red'}}>
+          {result=='correct'?"Correct!!":`Sorry, answer was ${x*y}, try again!`}
+        </Text>
+
+        <Button
+              color='green'
+              title='Next Question'
+              onPress = {() => {
+                setX(Math.round(Math.random()*n))
+                setY(Math.round(Math.random()*n))
+                setResult('waiting')
+                setAnswer('')
+              }}
+
+          />
+      </View>
+    )}
+    <View style={{flex:1}}>
+        <Text> Correct: {correct}</Text>
+        <Text> Answered: {answered}</Text>
+        <Text> Percent Correct: {(correct/answered*100).toFixed(1)} </Text>
+
+        <Button
+            title={(debugging?'hide':'show')+" debug info" }
+            color="green"
+            onPress = {() => setDebugging(!debugging)}
+            />
+            {debugView}
+    </View>
+  </View>
+      );
+    }
+  const styles = StyleSheet.create ({
+    container: {
+      flex: 1,
+      flexDirection:'column',
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+      border: "thick solid red",
+      margin:"20px",
+      padding:"20px",
+    },
+    textinput:{
+      margin:20,
+      fontSize:20
+    },
+    header: {
+      fontSize:40,
+      color:'blue'
+    },
+    rowContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+  });
+
+export default MathQuiz;
