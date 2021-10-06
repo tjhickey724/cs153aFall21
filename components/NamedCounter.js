@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {View,StyleSheet,Button,Text} from 'react-native';
 
 
-const NamedCounter = (props) => {
+const NamedCounter = ({label,value,incrTotal}) => {
   const [total,setTotal] = useState(0)
 
   return (
@@ -13,14 +13,14 @@ const NamedCounter = (props) => {
       }
      }>
       <Button
-         title={props.label}
+         title={label}
          onPress={()=>{
               setTotal(total+1)
-              props.incrTotal(props.value)
+              incrTotal(value)
             }}
       />
       <Text> {total} </Text>
-      <Text> ${(total*props.value/100).toFixed(2)} </Text>
+      <Text> ${(total*value/100).toFixed(2)} </Text>
 
     </View>
   );

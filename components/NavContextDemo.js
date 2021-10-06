@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import ValueProvider from './ValueContext';
-import CounterDemoWithContext from './CounterDemoWithContext'
+import NavDemo1 from './NavDemo1'
 
 const App = () => {
-  const data = {total:0, count:0, log:[]}
+  const data = {name:"no one", email:"non@none.com"}
 
   return (
     <ValueProvider value={data}>
-        <CounterDemoWithContext />
+        <NavDemo1 />
     </ValueProvider>
   )
 }

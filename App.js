@@ -20,14 +20,16 @@ import WebViewer from './components/WebViewer'
 import Profile from './components/Profile'
 import Pomodoros from './components/Pomodoros'
 import WebViewer from './components/WebViewer'
-*/
 import CounterDemo from './components/CounterDemo'
 import ContextDemo from './components/ContextDemo'
+*/
 
+
+import NavDemo from './components/NavContextDemo'
 
 export default function App() {
   return (
-    <ContextDemo />
+    <NavDemo />
 
   );
 }

@@ -32,6 +32,9 @@ const CounterDemoWithContext = () => {
         <NamedCounterC label="Ten" value={1000}  />
         <NamedCounterC label="Twenty" value={2000}  />
       </View>
+      <Text>Use a flatlist for this ...
+        {JSON.stringify(currentValue.log,null,5)}
+      </Text>
     </View>
   );
 }

@@ -3,11 +3,15 @@ import {View,StyleSheet,Button,Text} from 'react-native';
 import {useValue} from './ValueContext'
 
 
-const NamedCounter = (props) => {
+const NamedCounter = ({value,label}) => {
   const {currentValue, setCurrentValue} = useValue();
   const updateData = () => {
+    let vals = currentValue.log
+    console.log("vals="+vals)
     setCurrentValue({count:currentValue.count+1,
-                     total:currentValue.total+props.value})
+                     total:currentValue.total+value,
+                     log:vals+[value]
+                   })
   }
   const [total,setTotal] = useState(0)
 
@@ -19,14 +23,14 @@ const NamedCounter = (props) => {
       }
      }>
       <Button
-         title={props.label}
+         title={label}
          onPress={()=>{
               setTotal(total+1)
               updateData()
             }}
       />
       <Text> {total} </Text>
-      <Text> ${(total*props.value/100).toFixed(2)} </Text>
+      <Text> ${(total*value/100).toFixed(2)} </Text>
 
     </View>
   );
