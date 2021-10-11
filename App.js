@@ -4,7 +4,7 @@ import MathQuiz from './components/MathQuiz'
 
 export default function App() {
   return (
-    <MathQuiz n={100}/>
+    <MathQuiz n={12}/>
     //<PointDemo />
   );
 }

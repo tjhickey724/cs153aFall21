@@ -4,9 +4,9 @@
   got right and the total number of questions they answered.
   It generates random numbers in the range 0 to n for products
 */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const MathQuiz = ({n}) => {
@@ -18,6 +18,9 @@ const MathQuiz = ({n}) => {
   const [answered,setAnswered] = useState(0)
   const [debugging,setDebugging] = useState(false)
 
+  useEffect(() => {getData()}
+           ,[])
+
   let debugView = ""
   if (debugging) {
     debugView =
@@ -28,77 +31,115 @@ const MathQuiz = ({n}) => {
           <Text> correct: {correct} </Text>
           <Text> answered: {answered} </Text>
           <Text> result: {result} </Text>
+          <Button title="clear memory"
+              onPress={()=> clearAll()}/>
       </View>
   }
 
-      return (
-  <View style={{flex:1,justifyContent:'flex-start',alignItems:'flex-start'}}>
-    <Text style={{fontSize:60, color:'blue'}}>
-       Math Quiz for numbers between 0 and {n}
-    </Text>
-    <Text style={{fontSize:40}}>
-      Calculate the product of the following two numbers:
-    </Text>
-    <View style={{flexDirection:'row', justifyContent:'space-around'}}>
-      <Text style={{fontSize:60}}> {x} * {y} = </Text>
-      <TextInput
-            style={{fontSize:60}}
-            placeholder='???'
-            onChangeText={text => {setAnswer(text)}}
-            value={answer}
-        />
-    </View>
-    {result=='waiting'?(
-    <Button
-        color="red"
-        title="check answer"
-        onPress={()=> {
-          let a = parseInt(answer)
-          if (a == x*y){
-            setResult('correct')
-            setCorrect(correct+1)
+  const storeData = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('@mathquiz', jsonValue)
+        } catch (e) {
+          console.dir(e)
+        }
+  }
+
+  const getData = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem('@mathquiz')
+          let data = null
+          if (jsonValue!=null) {
+            data = JSON.parse(jsonValue)
+            setCorrect(data.correct)
+            setAnswered(data.answered)
           } else {
-            setResult('incorrect')
+            setCorrect(0)
+            setAnswered(0)
           }
+        } catch(e) {
+          console.dir(e)
+        }
+  }
 
-          setAnswered(answered+1)
-        }}
-    />
-  ):(<View style={
-       {
-        flexDirection:'column',
-        alignItems:'center',
-        justifyContent:'space-around'}}>
-        <Text style={{fontSize:32,color:'red'}}>
-          {result=='correct'?"Correct!!":`Sorry, answer was ${x*y}, try again!`}
-        </Text>
+  const clearAll = async () => {
+        try {
+          await AsyncStorage.clear()
+        } catch(e) {
+          console.dir(e)
+        }
+  }
 
-        <Button
-              color='green'
-              title='Next Question'
-              onPress = {() => {
-                setX(Math.round(Math.random()*n))
-                setY(Math.round(Math.random()*n))
-                setResult('waiting')
-                setAnswer('')
+
+  return (
+        <View style={{flex:1,justifyContent:'flex-start',alignItems:'flex-start'}}>
+          <Text style={{fontSize:60, color:'blue'}}>
+             Math Quiz for numbers between 0 and {n}
+          </Text>
+          <Text style={{fontSize:40}}>
+            Calculate the product of the following two numbers:
+          </Text>
+          <View style={{flexDirection:'row', justifyContent:'space-around'}}>
+            <Text style={{fontSize:60}}> {x} * {y} = </Text>
+            <TextInput
+                  style={{fontSize:60}}
+                  placeholder='???'
+                  onChangeText={text => {setAnswer(text)}}
+                  value={answer}
+              />
+          </View>
+          {result=='waiting'?(
+          <Button
+              color="red"
+              title="check answer"
+              onPress={()=> {
+                let a = parseInt(answer)
+                if (a == x*y){
+                  setResult('correct')
+                  setCorrect(correct+1)
+                } else {
+                  setResult('incorrect')
+                }
+
+                setAnswered(answered+1)
+                storeData({correct,answered})
               }}
-
           />
-      </View>
-    )}
-    <View style={{flex:1}}>
-        <Text> Correct: {correct}</Text>
-        <Text> Answered: {answered}</Text>
-        <Text> Percent Correct: {(correct/answered*100).toFixed(1)} </Text>
+        ):(<View style={
+             {
+              flexDirection:'column',
+              alignItems:'center',
+              justifyContent:'space-around'}}>
+              <Text style={{fontSize:32,color:'red'}}>
+                {result=='correct'?"Correct!!":`Sorry, answer was ${x*y}, try again!`}
+              </Text>
 
-        <Button
-            title={(debugging?'hide':'show')+" debug info" }
-            color="green"
-            onPress = {() => setDebugging(!debugging)}
-            />
-            {debugView}
-    </View>
-  </View>
+              <Button
+                    color='green'
+                    title='Next Question'
+                    onPress = {() => {
+                      setX(Math.round(Math.random()*n))
+                      setY(Math.round(Math.random()*n))
+                      setResult('waiting')
+                      setAnswer('')
+                    }}
+
+                />
+            </View>
+          )}
+          <View style={{flex:1}}>
+              <Text> Correct: {correct}</Text>
+              <Text> Answered: {answered}</Text>
+              <Text> Percent Correct: {(correct/answered*100).toFixed(1)} </Text>
+
+              <Button
+                  title={(debugging?'hide':'show')+" debug info" }
+                  color="green"
+                  onPress = {() => setDebugging(!debugging)}
+                  />
+                  {debugView}
+          </View>
+        </View>
       );
     }
   const styles = StyleSheet.create ({
