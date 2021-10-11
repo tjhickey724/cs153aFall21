@@ -36,6 +36,53 @@ const MathQuiz = ({n}) => {
       </View>
   }
 
+  let responseView = (<View></View>)
+
+  if (result=="waiting") {
+    responseView = (
+      <Button
+          color="red"
+          title="check answer"
+          onPress={()=> {
+            let a = parseInt(answer)
+            if (a == x*y){
+              setResult('correct')
+              setCorrect(correct+1)
+            } else {
+              setResult('incorrect')
+            }
+
+            setAnswered(answered+1)
+            storeData({correct,answered})
+          }}
+      />
+    )
+  } else {
+    responseView =  (
+      <View style={
+         {
+          flexDirection:'column',
+          alignItems:'center',
+          justifyContent:'space-around'}}>
+          <Text style={{fontSize:32,color:'red'}}>
+            {result=='correct'?"Correct!!":`Sorry, answer was ${x*y}, try again!`}
+          </Text>
+
+          <Button
+                color='green'
+                title='Next Question???'
+                onPress = {() => {
+                  setX(Math.round(Math.random()*n))
+                  setY(Math.round(Math.random()*n))
+                  setResult('waiting')
+                  setAnswer('')
+                }}
+
+            />
+        </View>
+      )
+  }
+
   const storeData = async (value) => {
         try {
           const jsonValue = JSON.stringify(value)
@@ -88,45 +135,9 @@ const MathQuiz = ({n}) => {
                   value={answer}
               />
           </View>
-          {result=='waiting'?(
-          <Button
-              color="red"
-              title="check answer"
-              onPress={()=> {
-                let a = parseInt(answer)
-                if (a == x*y){
-                  setResult('correct')
-                  setCorrect(correct+1)
-                } else {
-                  setResult('incorrect')
-                }
 
-                setAnswered(answered+1)
-                storeData({correct,answered})
-              }}
-          />
-        ):(<View style={
-             {
-              flexDirection:'column',
-              alignItems:'center',
-              justifyContent:'space-around'}}>
-              <Text style={{fontSize:32,color:'red'}}>
-                {result=='correct'?"Correct!!":`Sorry, answer was ${x*y}, try again!`}
-              </Text>
+          {responseView}
 
-              <Button
-                    color='green'
-                    title='Next Question'
-                    onPress = {() => {
-                      setX(Math.round(Math.random()*n))
-                      setY(Math.round(Math.random()*n))
-                      setResult('waiting')
-                      setAnswer('')
-                    }}
-
-                />
-            </View>
-          )}
           <View style={{flex:1}}>
               <Text> Correct: {correct}</Text>
               <Text> Answered: {answered}</Text>
