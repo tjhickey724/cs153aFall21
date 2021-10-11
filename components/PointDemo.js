@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+
 import Point,{adder,newPoint,origin} from '../lib/Point'
 
 // const App = () => {...}
