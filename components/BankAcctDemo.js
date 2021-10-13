@@ -30,8 +30,8 @@ export default function App() {
     setAcct1(a1)
     setAcct2(a2)
     // update the balance state from the account state
-    setBal1(acct1.balance)
-    setBal2(acct2.balance)
+    setBal1(bal1)
+    setBal2(bal2)
 
   },[])
 

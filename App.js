@@ -8,7 +8,7 @@ export default function App() {
   return (
     //<MathQuiz n={20}/>
     //<PointDemo />
-    //<BankAcctDemo />
-    <ConditionalRender />
+    <BankAcctDemo />
+    //<ConditionalRender />
   );
 }
