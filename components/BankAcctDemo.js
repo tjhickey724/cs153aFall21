@@ -14,24 +14,26 @@ import BankAccount, { transfer } from '../lib/BankAccount';
 
 // const App = () => {...}
 export default function App() {
-  let [acct1,setAcct1] = useState({})
-  let [acct2,setAcct2] = useState({})
-  let [bal1,setBal1]= useState(0)
-  let [bal2,setBal2]= useState(0)
+  let [acct1,setAcct1] = useState(new BankAccount(1000))
+  let [acct2,setAcct2] = useState(new BankAccount(2000))
+  let [bal1,setBal1]= useState(acct1.balance)
+  let [bal2,setBal2]= useState(acct2.balance)
+  let [hiddenChange,setHiddenChange] = useState(0)
   let [transferAmount,setTransferAmount] = useState(100)
+
 
 
 
   useEffect(()=>{
     // create the two bank accounts
-    let a1 = new BankAccount(1000)
-    let a2 = new BankAccount(2000)
-    // store them in state variables
-    setAcct1(a1)
-    setAcct2(a2)
+    // let a1 = new BankAccount(1000)
+    // let a2 = new BankAccount(2000)
+    // // store them in state variables
+    // setAcct1(a1)
+    // setAcct2(a2)
     // update the balance state from the account state
-    setBal1(bal1)
-    setBal2(bal2)
+    //setBal1(acct1.balance)
+    //setBal2(acct2.balance)
 
   },[])
 
@@ -51,8 +53,9 @@ export default function App() {
             title="transfer"
             onPress={() => {
                     transfer(acct1, acct2, parseFloat(transferAmount))
-                    setBal1(acct1.balance)
-                    setBal2(acct2.balance)
+                    //setBal1(acct1.balance)
+                    //setBal2(acct2.balance)
+                    setHiddenChange(1-hiddenChange)
             }} />
             <TextInput
                 value={transferAmount}

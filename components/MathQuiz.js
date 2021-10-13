@@ -21,6 +21,10 @@ const MathQuiz = ({n}) => {
   useEffect(() => {getData()}
            ,[])
 
+  useEffect(() => {
+    storeData({correct,answered})
+  },[correct,answered])
+
   let debugView = ""
   if (debugging) {
     debugView =
@@ -46,14 +50,16 @@ const MathQuiz = ({n}) => {
           onPress={()=> {
             let a = parseInt(answer)
             if (a == x*y){
+              //storeData({correct:correct+1,answered:answered+1})
               setResult('correct')
               setCorrect(correct+1)
             } else {
+              //storeData({correct:correct,answered:answered+1})
               setResult('incorrect')
             }
 
             setAnswered(answered+1)
-            storeData({correct,answered})
+
           }}
       />
     )
