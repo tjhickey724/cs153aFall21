@@ -5,11 +5,10 @@ import {View} from 'react-native'
 //import BankAcctDemo from './components/BankAcctDemo'
 
 import CloudContextDemo from './components/CloudContextDemo'
-import Quiz1 from './components/Quiz1'
+
 
 export default function App() {
   return (
-      //<CloudContextDemo />
-      <Quiz1 />
+      <CloudContextDemo />
   );
 }

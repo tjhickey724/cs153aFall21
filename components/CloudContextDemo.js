@@ -1,5 +1,5 @@
 /*
- This App show how to
+ This App show how to store data in cloud
 
 */
 import React, { useState, useEffect } from "react";
@@ -14,7 +14,7 @@ const App = () => {
   const appKey = '3398311'
   const appURL = 'https://desolate-brook-83944.herokuapp.com/appKey'
   //const appURL = 'http://localhost:5000/appKey'
-  const data = {appKey,appURL}
+  const data = {appKey:appKey,appURL:appURL}
 
 
 
