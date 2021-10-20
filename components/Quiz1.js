@@ -81,11 +81,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'stretch',
-    justifyContent: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     flexDirection:'column',
     margin:'20px',
-    border:'thick solid black',
+    borderStyle:'solid',
+    borderColor:'black',
+    borderWidth:20,
   },
 
 });

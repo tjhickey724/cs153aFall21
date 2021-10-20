@@ -77,6 +77,20 @@ const App = () => {
     setData(books)
   }
 
+  const clearCloudData = async () => {
+    console.log('in clearCloudData data=')
+    let data = {appKey:appKey,
+                userKey:userKey,
+                valueKey:'@books'}
+    console.dir(data)
+
+    let result =
+      await Axios.post(appURL+'/clearData',data)
+    console.log(`result=`)
+    console.dir(result)
+    setData([])
+  }
+
   const renderItem = ({ item }) => (
     <View>
       <Item
@@ -112,6 +126,7 @@ const App = () => {
             storeCloudData(book)
           }} />
           <Button title="get cloud data" color='lightgreen' onPress={() => getCloudData()} />
+          <Button title="clear cloud data" color='red' onPress={() => clearCloudData()} />
         </View>
       </View>
      </ScrollView>
