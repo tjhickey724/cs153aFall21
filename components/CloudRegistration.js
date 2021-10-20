@@ -11,7 +11,7 @@ const CloudRegistration = () => {
 
   useEffect(() => {
               //clearAll()
-              getData('@userKey')}
+              getData()}
            ,[])
 
   const storeData = async (key,value) => {
@@ -23,9 +23,9 @@ const CloudRegistration = () => {
       }
   }
 
-  const getData = async (key) => {
+  const getData = async () => {
       try {
-        let jsonValue = await AsyncStorage.getItem(key)
+        let jsonValue = await AsyncStorage.getItem('@userKey')
         //jsonValue=null
         console.log('jsonValue = '+jsonValue)
         console.log('appKey = '+appKey)
@@ -49,13 +49,13 @@ const CloudRegistration = () => {
       }
  }
 
-           const clearAll = async () => {
-                try {
-                  await AsyncStorage.clear()
-                } catch(e) {
-                  console.dir(e)
-                }
-           }
+ const clearAll = async () => {
+      try {
+        await AsyncStorage.clear()
+      } catch(e) {
+        console.dir(e)
+      }
+ }
 
   let registrationComponent = <Text>initializing userKey:{userKey}</Text>
   if (userKey){

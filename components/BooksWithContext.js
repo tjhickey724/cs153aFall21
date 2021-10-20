@@ -1,65 +1,57 @@
 /*
+  Books with Context
   This is a demo of an app which shows the users favorite books
-  but also show all of the favorite books of other users of this app.
-  Clearly this is not scalable!
+  This gets the appKey, appURL, and userKey from the Context
 */
 import React,{useState,useEffect} from 'react';
 import { SafeAreaView, ScrollView, View, FlatList, StyleSheet, Text, TextInput, Button, StatusBar, Image } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios from 'axios'
-import appKey,{appURL} from '../lib/appKey.js'
+
+import {useValue} from './ValueContext';
+//import appKey,{appURL} from '../lib/appKey.js'
 
 
 
 
 
-const Item = ({ title, author, description}) => (
+const Item = ({ title, author, description, id}) => (
       <View style={styles.item}>
         <Text style={styles.title}>{title.trim()}</Text>
         <Text>{author.trim()}</Text>
         <Text> {description} </Text>
+        <Button title={"id="+JSON.stringify(id)} />
       </View>
 );
 
-const ListDemoScreen = () => {
+const App = () => {
+  const {currentValue,setCurrentValue} = useValue();
+  const appKey = currentValue.appKey
+  const appURL = currentValue.appURL
+  const userKey = currentValue.userKey
+  console.log('currentValue=')
+  console.dir(currentValue)
+
   const [data,setData] = useState([])
   const [title,setTitle] = useState("")
   const [author,setAuthor] = useState("")
   const [description,setDescription] = useState("")
-  const [userKey,setUserKey] = useState(null) // used to store personal data in cloud
-
-  useEffect(() => {
-    getData()
-  }, [])
 
   useEffect(() => {
     getCloudData()
-  },[userKey])
+  },[])
 
 
 
-  const getData = async () => {
-      try {
-        let jsonValue = await AsyncStorage.getItem('@userKey')
-        if (jsonValue!=null) {
-          let data = JSON.parse(jsonValue)
-          console.log('in getData, data=')
-          console.dir(data)
-          console.log(`data.userKey= ${data.userKey}`)
-          setUserKey(data.userKey)
-        }
-      }catch(e){
-        console.dir(e)
-      }
-    }
 
   const storeCloudData = async (value) => {
+    console.log('in storeCloudData, data=')
     let data = {appKey:appKey,
                 userKey:userKey,
                 valueKey:'@books',
                 value:value}
-
+    console.dir(data)
     let result =
       await Axios.post(appURL+'/storeData',data)
     console.log(`result=`)
@@ -67,52 +59,62 @@ const ListDemoScreen = () => {
   }
 
   const getCloudData = async () => {
+    console.log('in getCloudData data=')
     let data = {appKey:appKey,
                 userKey:userKey,
                 valueKey:'@books'}
-    console.log('in getCloudData, data=')
     console.dir(data)
 
     let result =
       await Axios.post(appURL+'/getData',data)
     console.log(`result=`)
-    console.dir(result.data)
-    const books = result.data.map((x) => JSON.parse(x.value))
+    console.dir(result)
+    const books =
+       result.data.map(
+          (x) => {return {id:x._id, book:JSON.parse(x.value)}})
+    console.log('books=')
+    console.dir(books)
     setData(books)
   }
 
   const renderItem = ({ item }) => (
     <View>
       <Item
-          title={item.title}
-          author={item.author}
-          description={item.description}/>
+          title={item.book.title}
+          author={item.book.author}
+          description={item.book.description + JSON.stringify(item)}
+          id = {item.id}
+      />
     </View>
   );
 
   return (
     <SafeAreaView style={styles.container}>
+     <ScrollView>
       <Text style={{fontSize:32,
                     backgroundColor:'red'}}>
          books
       </Text>
+      <Text> userKey='{userKey}' appKey='{appKey}' appURL={appURL} </Text>
       <FlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={item => item.title+item.author}
+        keyExtractor={(item,index) => item.title+item.author+index}
       />
       <View>
         <Text>Add a book</Text>
         <TextInput placeholder="title" onChangeText={(text) => setTitle(text)} />
         <TextInput placeholder="author" onChangeText={(text) => setAuthor(text)} />
         <TextInput placeholder="description" onChangeText={(text) => setDescription(text)} />
-        <Button title="store book" color='pink' onPress={() =>{
+        <View style={{flexDirection:'row'}}>
+          <Button title="store book" color='pink' onPress={() =>{
             const book = {title,author,description}
             storeCloudData(book)
           }} />
-        <Button title="get cloud data" color='lightgreen' onPress={() => getCloudData()} />
-
+          <Button title="get cloud data" color='lightgreen' onPress={() => getCloudData()} />
+        </View>
       </View>
+     </ScrollView>
     </SafeAreaView>
   );
 }
@@ -134,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListDemoScreen;
+export default App;
