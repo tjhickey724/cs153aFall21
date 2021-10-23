@@ -16,11 +16,12 @@ import {useValue} from './ValueContext';
 
 
 
-const Item = ({ title, author, description, id}) => (
+const Item = ({ title, author, description, id, json}) => (
       <View style={styles.item}>
         <Text style={styles.title}>{title.trim()}</Text>
         <Text>{author.trim()}</Text>
         <Text> {description} </Text>
+        <Text> json form: {JSON.stringify(json)} </Text>
         <Button title={"id="+JSON.stringify(id)} />
       </View>
 );
@@ -34,6 +35,7 @@ const App = () => {
   console.dir(currentValue)
 
   const [data,setData] = useState([])
+  const [books,setBooks] = useState([])
   const [title,setTitle] = useState("")
   const [author,setAuthor] = useState("")
   const [description,setDescription] = useState("")
@@ -74,7 +76,7 @@ const App = () => {
           (x) => {return {id:x._id, book:JSON.parse(x.value)}})
     console.log('books=')
     console.dir(books)
-    setData(books)
+    setBooks(books)
   }
 
   const clearCloudData = async () => {
@@ -88,16 +90,17 @@ const App = () => {
       await Axios.post(appURL+'/clearData',data)
     console.log(`result=`)
     console.dir(result)
-    setData([])
+    setBooks([])
   }
 
-  const renderItem = ({ item }) => (
+  const renderBook = ({ item }) => (
     <View>
       <Item
           title={item.book.title}
           author={item.book.author}
           description={item.book.description + JSON.stringify(item)}
           id = {item.id}
+          json={item}
       />
     </View>
   );
@@ -111,8 +114,8 @@ const App = () => {
       </Text>
       <Text> userKey='{userKey}' appKey='{appKey}' appURL={appURL} </Text>
       <FlatList
-        data={data}
-        renderItem={renderItem}
+        data={books}
+        renderItem={renderBook}
         keyExtractor={(item,index) => item.title+item.author+index}
       />
       <View>
