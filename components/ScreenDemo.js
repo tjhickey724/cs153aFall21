@@ -1,32 +1,27 @@
 import React from "react";
 import { SafeAreaView, View, Text, StyleSheet} from 'react-native'
 import ScreenTemplate from '../containers/ScreenTemplate'
+import ThreePartRow from '../containers/ThreePartRow'
+import PhotoID from './PhotoID'
+
 
 const Header = () => {
   return (
-    <View style={styles.banner}>
-       <Text>Left</Text>
-       <View style={styles.centeredElt}>
-          <Text>The header</Text>
-       </View>
-       <Text>Right</Text>
-    </View>
-   )
+  <ThreePartRow
+       left = {<Text>the left</Text>}
+      right = {<Text> the right </Text>}
+    content = {<Text> this is the content </Text>}
+  />
+)}
 
-}
-
-const Footer = () => {
-  return (<Text>The footer</Text>)
-}
 
 const ScreenDemo = () => {
   return (
     <ScreenTemplate
-        header={<Header/>}
-        footer={<Footer/>}
+        header={<Header />}
+        footer={<Text>this is the footer </Text>}
     >
-      <Text>Line 1</Text>
-      <Text>Line 2</Text>
+      <PhotoID name="Tim" imageurl="https://www.brandeis.edu/precollege/images/tim-hickey-speaking"/>
     </ScreenTemplate>
   )
 }

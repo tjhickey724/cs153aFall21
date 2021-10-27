@@ -15,7 +15,7 @@ const PhotoID = ({name,imageurl}) => {
       />
 
     return (
-      <View style= {{flexDirection:'row', flex: 2}}>
+      <View style= {{flexDirection:'row', flex: 2, backgroundColor:'lightgreen'}}>
 
           <View style= {{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
               <Image source={{uri:image}}

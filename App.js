@@ -4,6 +4,7 @@ import {View} from 'react-native'
 //import PointDemo from './components/PointDemo'
 //import BankAcctDemo from './components/BankAcctDemo'
 import ScreenDemo from './components/ScreenDemo'
+import Pomodoros from './components/Pomodoros'
 
 
 export default function App() {
