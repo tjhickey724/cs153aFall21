@@ -8,9 +8,9 @@ import PhotoID from './PhotoID'
 const Header = () => {
   return (
   <ThreePartRow
-       left = {<Text>the left</Text>}
-      right = {<Text> the right </Text>}
-    content = {<Text> this is the content </Text>}
+       left = {<Text style={{fontSize:24}}>the left</Text>}
+      right = {<Text style={{fontSize:24}}> the right </Text>}
+    content = {<Text style={{fontSize:24}}> this is the content </Text>}
   />
 )}
 
@@ -19,9 +19,13 @@ const ScreenDemo = () => {
   return (
     <ScreenTemplate
         header={<Header />}
-        footer={<Text>this is the footer </Text>}
+        footer={<Text  style={{fontSize:32}}>this is the footer </Text>}
     >
-      <PhotoID name="Tim" imageurl="https://www.brandeis.edu/precollege/images/tim-hickey-speaking"/>
+        <Text style={{fontSize:32}}>Screen Demo</Text>
+        <PhotoID
+            name="Tim Hickey"
+            imageurl="https://www.brandeis.edu/precollege/images/tim-hickey-speaking"
+        />
     </ScreenTemplate>
   )
 }
