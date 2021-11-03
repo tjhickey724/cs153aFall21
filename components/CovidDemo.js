@@ -7,6 +7,19 @@ const CovidDemo = (props) => {
   const [text, setText] = useState('');
   const [data,setData] = useState([]);
 
+  const getCovidData = async (state) => {
+    try{
+      let result = await fetch('https://data.cdc.gov/resource/9mfq-cb36.json?state='+state)
+      let cdata = await result.json()
+      cdata = cdata.sort(covid_before)
+      setData(cdata)
+      setLoading(false)
+    }catch(e){
+      console.log(`error in getCovidData: ${JSON.stringify(e)}`)
+    }
+
+  }
+
   function covid_before(a, b) {
     var keyA = new Date(a.created_at),
       keyB = new Date(b.created_at);
@@ -19,16 +32,9 @@ const CovidDemo = (props) => {
   }
 
   useEffect(() => {
-    fetch('https://data.cdc.gov/resource/9mfq-cb36.json?state='+state)
-      .then((response) => response.json())
-      .then((cdata) => {
-          // sort the list cdata and get most recent object ...
-          cdata = cdata.sort(covid_before)
-          setData(cdata)
-        })
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+    getCovidData(state)
   }, [state]);
+
 
   const renderItem = ({item}) => {
     return (
@@ -57,7 +63,7 @@ const CovidDemo = (props) => {
         onPress={() => {
           setState(text)
         }}
-        title="Get Covid Data Now"
+        title="Get Covid Data Now!! "
       />
       <Text> Covid Data for {state} is </Text>
       <View style={{flexDirection:'row'}}>
