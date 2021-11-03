@@ -4,10 +4,12 @@ import {View} from 'react-native'
 //import PointDemo from './components/PointDemo'
 //import BankAcctDemo from './components/BankAcctDemo'
 //import Pomodoros from './components/Pomodoros'
-import ScreenDemo from './components/ScreenDemo'
+//import ScreenDemo from './components/ScreenDemo'
+import GitHub from './components/GitHub'
+import CovidDemo from './components/CovidDemo'
 
 export default function App() {
   return (
-      <ScreenDemo />
+      <CovidDemo />
   );
 }
