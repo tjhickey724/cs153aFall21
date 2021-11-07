@@ -5,10 +5,11 @@ import {View} from 'react-native'
 //import BankAcctDemo from './components/BankAcctDemo'
 //import Pomodoros from './components/Pomodoros'
 //import ScreenDemo from './components/ScreenDemo'
-import CovidDemo from './components/CovidDemo'
+//import CovidDemo from './components/CovidDemo'
+import BBoardApp from './components/bboard/BBoardApp'
 
 export default function App() {
   return (
-      <CovidDemo />
+      <BBoardApp />
   );
 }
