@@ -26,15 +26,17 @@ const BBoards = () => {
 
   useEffect(() => {
     const getPosts = async () => {
-      const result =
+      let result = {data:[]}
+      result =
         await Axios.post(
           currentValue.appURL+"/posts",
           {bboard:bboard}
         )
       console.log('result=')
       console.dir(result.data)
+      //result.data.reverse()
       setPosts(result.data)
-      result.data.reverse()
+      console.dir(result.data)
       return result.data
     }
     const ps = getPosts()
@@ -52,6 +54,9 @@ const BBoards = () => {
          title:title,
          text:text,
        });
+    setTitle("");
+    setText("");
+
     setNumNewPosts(numNewPosts+1)
   }
 
@@ -71,9 +76,11 @@ const BBoards = () => {
           <Text> You've made  {numNewPosts} new posts</Text>
           <TextInput
               onChangeText={(text) => setTitle(text)}
+              value={title}
               placeholder="title"/>
           <TextInput
               onChangeText={(text) => setText(text)}
+              value={text}
               placeholder="body of the post"/>
           <TouchableOpacity
               onPress = {() => addPost()}
