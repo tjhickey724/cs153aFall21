@@ -133,7 +133,7 @@ const Registration = () => {
     )
   }
 
-  let login = <View></View>
+  let login = ""
   if (!checkedRegistration){
     login = <Text>Connecting to Server</Text>
   } else if (currentValue.email) {
@@ -143,7 +143,9 @@ const Registration = () => {
       <View>
           <View style={{flexDirection:'row'}}>
             <Text style={{paddingRight:20}}>Email</Text>
-            <TextInput onChangeText={(text)=> setEmail(text)} />
+            <TextInput
+                style={{backgroundColor:"#ccc"}}
+                onChangeText={(text)=> setEmail(text)} />
           </View>
           <Button
                 title="register"
@@ -169,12 +171,12 @@ const Registration = () => {
 
   console.log('checked ='+checkedRegistration)
   console.log('login=')
-  console.dir(login)
 
 
+//return (<View><Text>Testing</Text></View>)
   return (
     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-      <Text style={{fontWeight:'bold',color:'red'}}>BBdemo</Text>        {login}        {logout}
+      <Text>BBdemo</Text>        {login}        {logout}
     </View>
   )
 }
