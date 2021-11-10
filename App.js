@@ -6,7 +6,7 @@ import {View} from 'react-native'
 //import Pomodoros from './components/Pomodoros'
 //import ScreenDemo from './components/ScreenDemo'
 //import CovidDemo from './components/CovidDemo'
-import BBoardApp from './components/bboard/BBoardApp'
+import BBoardApp from './components/bboard2/BBoardApp'
 
 export default function App() {
   return (
