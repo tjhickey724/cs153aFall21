@@ -7,7 +7,7 @@ import ValueProvider,{useValue} from '../ValueContext';
 
 const Registration = () => {
     const {currentValue,setCurrentValue} = useValue()
-    const [debugging,setDebugging] = useState(false)
+    const [debugging,setDebugging] = useState(true)
     const [email,setEmail] = useState("")
     const [checkedRegistration, setCheckedRegistration] = useState(false)
 
@@ -17,16 +17,14 @@ const Registration = () => {
     const registerEmail = async (email) => {
       try{
           let appURL = currentValue.appURL
-
           let result = await Axios.post(appURL+'/register',{email:email})
-
           let secret = result.data.secret
 
           await AsyncStorage.setItem(
             '@userData',
-            JSON.stringify({...currentValue,secret}))
+            JSON.stringify({...currentValue,email,secret}))
           setEmail(email)
-          setCurrentValue({...currentValue, secret}) 
+          setCurrentValue({...currentValue, email,secret})
         }catch(e){
           console.log('error'+e)
           console.dir(e)
@@ -50,16 +48,11 @@ const Registration = () => {
          let userData = null
          if (jsonValue!=null) {
            userData = JSON.parse(jsonValue)
-           console.log('userKeyData=')
-           console.dir(userData)
            let newData =
             {appURL:currentValue.appURL,email:userData.email,secret:userData.secret}
-           console.log('newData=')
-           console.dir(newData)
            setCurrentValue(newData)
            setEmail(userData.email)
            setCheckedRegistration(true)
-           console.log('found async, set checked to true')
 
          } else {
               console.log('else clause of Registration')
@@ -69,9 +62,6 @@ const Registration = () => {
        } catch(e) {
          console.dir(e)
        }
-
-       console.log('data=')
-       console.dir(currentValue)
     }
 
   let ui = <Text>nodebug</Text>
@@ -85,63 +75,7 @@ const Registration = () => {
     )
   }
 
-  let login = ""
-  if (!checkedRegistration){
-    login = <Text>Connecting to Server</Text>
-  } else if (currentValue.email) {
-      login = <Text>{email}</Text>
-  } else {
-      login = (
-        <View style={{padding:10,margin:10,backgroundColor:"#ddd"}}>
 
-             <View style={{flexDirection:'row',justifyContent:'flex-start'}}>
-                <Text style={{fontSize:24}}>email: </Text>
-                <TextInput
-                     style={{fontSize:24}}
-                     placeholder="Enter your email "
-                     value={email}
-                     onChangeText={text =>{ setEmail(text) }}
-                />
-             </View>
-
-
-             <TouchableOpacity
-                onPress = {() => registerEmail(email)}
-             >
-               <Text style={{fontSize:20}}> Register </Text>
-             </TouchableOpacity>
-
-             <TouchableOpacity
-                onPress={async () => {
-                  AsyncStorage.clear()
-                  setEmail("")
-                  setCurrentValue(
-                    {appURL:currentValue.appURL,email:"",secret:""})
-                }}
-             >
-               <Text style={{fontSize:20}}> Logout </Text>
-             </TouchableOpacity>
-
-      </View>
-    )
-  }
-
-  const logout = (
-      <TouchableOpacity
-
-         onPress={async () => {
-           AsyncStorage.clear()
-           setEmail("")
-           setCurrentValue(
-             {appURL:currentValue.appURL,email:"",secret:""})
-         }}
-      >
-        <Text style={{fontSize:20}}> Logout </Text>
-      </TouchableOpacity>
-  )
-
-  console.log('checked ='+checkedRegistration)
-  console.log('login=')
 
 
   return (
@@ -158,14 +92,14 @@ const Registration = () => {
                 />
              </View>
 
-
-             <TouchableOpacity
+             {currentValue.email==""?
+             (<TouchableOpacity
                 onPress = {() => registerEmail(email)}
              >
                <Text style={{fontSize:20}}> Register </Text>
-             </TouchableOpacity>
-
-             <TouchableOpacity
+             </TouchableOpacity>)
+             :
+             (<TouchableOpacity
                 onPress={async () => {
                   AsyncStorage.clear()
                   setEmail("")
@@ -175,6 +109,7 @@ const Registration = () => {
              >
                <Text style={{fontSize:20}}> Logout </Text>
              </TouchableOpacity>
+           )}
 
         </View>
 

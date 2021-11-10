@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import ValueProvider from '../ValueContext';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Button, } from 'react-native';
 
-import ShowProfile from './ShowProfile'
-import Login from './Login'
-import HomeScreen from './HomeScreen'
+import ValueProvider from '../ValueContext';
+
+import Profile from './Profile'
+import Home from './Home'
 import BBoards from './BBoards'
 import Registration from './Registration'
 
@@ -25,12 +25,10 @@ const App = () => {
     <ValueProvider value={data}>
       <NavigationContainer>
         <Tab.Navigator>
-          <Tab.Screen name="Home" component= {HomeScreen} />
-          <Tab.Screen name="Login" component= {Login} />
-          <Tab.Screen name="Profile" component= {ShowProfile} />
+          <Tab.Screen name="Home" component= {Home} />
+          <Tab.Screen name="Profile" component= {Profile} />
           <Tab.Screen name="BBoards" component= {BBoards} />
           <Tab.Screen name="Register" component= {Registration} />
-
         </Tab.Navigator>
       </NavigationContainer>
     </ValueProvider>
