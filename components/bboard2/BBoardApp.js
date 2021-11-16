@@ -16,8 +16,8 @@ const App = () => {
   const data =
     {name:"",
      email:"",
-     appURL: 'https://glacial-hamlet-05511.herokuapp.com',
-     //appURL: 'http://127.0.0.1:3000',
+     //appURL: 'https://glacial-hamlet-05511.herokuapp.com',
+     appURL: 'http://127.0.0.1:3000',
      secret: "",
    }
 

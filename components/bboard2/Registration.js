@@ -19,12 +19,13 @@ const Registration = () => {
           let appURL = currentValue.appURL
           let result = await Axios.post(appURL+'/register',{email:email})
           let secret = result.data.secret
+          let userid = result.data.userid
 
           await AsyncStorage.setItem(
             '@userData',
-            JSON.stringify({...currentValue,email,secret}))
+            JSON.stringify({...currentValue,email,secret,userid}))
           setEmail(email)
-          setCurrentValue({...currentValue, email,secret})
+          setCurrentValue({...currentValue, email,secret,userid})
         }catch(e){
           console.log('error'+e)
           console.dir(e)
@@ -49,7 +50,10 @@ const Registration = () => {
          if (jsonValue!=null) {
            userData = JSON.parse(jsonValue)
            let newData =
-            {appURL:currentValue.appURL,email:userData.email,secret:userData.secret}
+            {appURL:currentValue.appURL,
+              email:userData.email,
+              userid:userData.userid,
+              secret:userData.secret}
            setCurrentValue(newData)
            setEmail(userData.email)
            setCheckedRegistration(true)

@@ -11,6 +11,7 @@ export default function Profile() {
         <Text style={{fontSize:20}}>Email:{currentValue.email}</Text>
         <Text style={{fontSize:20}}>AppURL:{currentValue.appURL}</Text>
         <Text style={{fontSize:20}}>Secret:{currentValue.secret}</Text>
+        <Text style={{fontSize:20}}>UserId:{currentValue.userid}</Text>
     </View>
   )
 }

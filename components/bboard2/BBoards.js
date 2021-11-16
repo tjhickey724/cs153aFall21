@@ -6,15 +6,10 @@ import Axios from 'axios'
 
 import ValueProvider,{useValue} from '../ValueContext';
 
-const Item = ({item}) => {
-  return (
-    <View style={{padding:10,margin:10,backgroundColor:"#ddd"}}>
-      <Text style={{fontSize:24}}>{item.title}</Text>
-      <Text>{item.text}</Text>
-      <Text>{item.createdAt}</Text>
-    </View>
-  )
-}
+
+
+const flagPost = (item) => {return 0}
+
 
 const BBoards = () => {
   const {currentValue} = useValue();
@@ -25,6 +20,8 @@ const BBoards = () => {
   const [numNewPosts,setNumNewPosts] = useState(0)
 
   useEffect(() => {
+    // go out to the server and get the posts for the current bboard
+
     const getPosts = async () => {
       let result = {data:[]}
       result =
@@ -32,21 +29,17 @@ const BBoards = () => {
           currentValue.appURL+"/posts",
           {bboard:bboard}
         )
-      console.log('result=')
-      console.dir(result.data)
-      //result.data.reverse()
       setPosts(result.data)
-      console.dir(result.data)
       return result.data
     }
+
     const ps = getPosts()
-    console.log('posts are')
-    console.dir(ps)
+
   },[bboard,numNewPosts])
 
+
   const addPost = async () =>{
-    console.log('in addPost');
-    console.log(title+" "+text+" "+JSON.stringify(currentValue));
+
     await Axios.post(currentValue.appURL+"/addComment",
         {email:currentValue.email,
          secret:currentValue.secret,
@@ -58,6 +51,41 @@ const BBoards = () => {
     setText("");
 
     setNumNewPosts(numNewPosts+1)
+  }
+
+  const remove = async (item) => {
+    console.log('remove is called on item: ')
+    console.log(item)
+    const result = await Axios.post(currentValue.appURL+"/deletePost",
+       {email:currentValue.email,
+        secret:currentValue.secret,
+        postid:item._id})
+    console.log(result)
+    setNumNewPosts(numNewPosts+1)
+  }
+
+  const Item = ({item}) => {
+       const userid = currentValue.userid;
+       const isAuthor = userid === item.author;
+
+
+    return (
+      <View style={{padding:10,margin:10,backgroundColor:"#ddd"}}>
+        <Text style={{fontSize:24}}>{item.title}</Text>
+        <Text>{item.text}</Text>
+        <Text>{item.createdAt}</Text>
+        
+        {isAuthor &&
+          <Button
+            title="Delete"
+            onPress={()=>remove(item)}/> }
+
+        <Button
+          title="Flag"
+          onPress={() => flagPost(item)}
+        />
+      </View>
+    )
   }
 
 
