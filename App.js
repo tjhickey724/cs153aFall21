@@ -7,9 +7,10 @@ import {View} from 'react-native'
 //import ScreenDemo from './components/ScreenDemo'
 import GitHub from './components/GitHub'
 import CovidDemo from './components/CovidDemo'
+import Quiz5 from './components/Quiz5'
 
 export default function App() {
   return (
-      <CovidDemo />
+      <Quiz5 />
   );
 }
