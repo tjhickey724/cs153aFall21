@@ -11,6 +11,6 @@ import Quiz5 from './components/Quiz5'
 
 export default function App() {
   return (
-      <GitHub />
+      <Quiz5 />
   );
 }
