@@ -3,7 +3,7 @@ import {View,Text,TextInput,Button,TouchableOpacity} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios from 'axios'
 
-import ValueProvider,{useValue} from '../ValueContext';
+import {useValue} from '../ValueContext';
 
 const Registration = () => {
     const {currentValue,setCurrentValue} = useValue()

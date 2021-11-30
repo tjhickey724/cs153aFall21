@@ -4,7 +4,7 @@ import {SafeAreaView, View,Text,TextInput,
         FlatList,StyleSheet, ScrollView} from 'react-native'
 import Axios from 'axios'
 
-import ValueProvider,{useValue} from '../ValueContext';
+import {useValue} from '../ValueContext';
 
 
 
@@ -74,7 +74,7 @@ const BBoards = () => {
         <Text style={{fontSize:24}}>{item.title}</Text>
         <Text>{item.text}</Text>
         <Text>{item.createdAt}</Text>
-        
+
         {isAuthor &&
           <Button
             title="Delete"
